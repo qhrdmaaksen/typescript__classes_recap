@@ -12,5 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "lite-server": "^2.6.1"
+  },
+  "devDependencies": {
+    "prettier": "2.8.4"
   }
 }
