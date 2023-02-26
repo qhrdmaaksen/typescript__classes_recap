@@ -1,6 +1,7 @@
 'use strict';
 
 class Player {
+  static description = "this is player class";
   #score = 0;
   numLife = 10;
   constructor(first, last) {
@@ -12,6 +13,7 @@ class Player {
   get fullName() {
     return `${this.first} ${this.last}`;
   }
+	// fullName 에 공백 제거 후 first, last 에 할당
   set fullName(newName) {
     const [first, last] = newName.split(' ');
     this.first = first;
@@ -20,6 +22,7 @@ class Player {
   get score() {
     return this.#score;
   }
+	// newScore 에 음수 입력시 에러 발생토록함
   set score(newScore) {
     if (newScore < 0) {
       throw new Error('this is not positive number');
@@ -60,6 +63,7 @@ player1.fullName = 'kim woobin';
 console.log(player1.fullName)
 console.log(player1.first)
 console.log(player1.last)
+console.log(Player.description)
 console.log(Player);
 const player2 = new Player('shin', 'hyunwoo');
 player2.firstMeet();
