@@ -46,6 +46,15 @@ class Player {
   }
 }
 
+class AdminPlayer extends Player {
+  constructor(first, last, power) {
+    super(first, last);
+    this.power = power;
+  }
+  isAdmin = true;
+}
+const admin = new AdminPlayer("vita", "min",["delete", "restore"])
+
 const player1 = new Player('kim', 'minwoo');
 player1.firstMeet();
 console.log(player1.first);
