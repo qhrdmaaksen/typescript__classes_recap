@@ -1,18 +1,28 @@
 'use strict';
 
 class Player {
-	score = 0 ;
+	#score = 0 ;
 	numLife = 10;
   constructor(first, last) {
     console.log('in constructor');
 		this.first = first;
 		this.last = last;
+		this.#secret();
   }
+	getScore() {
+		return this.#score;
+	}
+	setScore (newScore) {
+		return this.#score = newScore;
+	}
   firstMeet() {
     console.log('hello world!');
   }
 	loseLife() {
 		this.numLife -= 1;
+	}
+	#secret() {
+		console.log('secret')
 	}
 }
 
@@ -23,6 +33,8 @@ console.log(player1.last)
 console.log(player1.numLife)
 player1.loseLife()
 console.log(player1.numLife)
+console.log(player1.getScore())
+console.log(player1.setScore(28))
 console.log(Player)
 const player2 = new Player("shin","hyunwoo");
 player2.firstMeet();
