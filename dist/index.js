@@ -31,10 +31,23 @@ class Player {
         this._score = newScore;
     }
 }
+class SuperPlayer extends Player {
+    constructor() {
+        super(...arguments);
+        this.isAdmin = true;
+    }
+    maxScore() {
+        this._score = 999;
+    }
+}
 const vitamin = new Player('vita', 'min', 33);
 vitamin.fullName;
 vitamin.score;
 vitamin.score = 36;
+const superMan = new SuperPlayer("vi", "ta", 13);
+console.log(superMan);
+console.log(superMan.maxScore());
+console.log(superMan);
 // private score 는 클래스 외부에서 접근 불가하기에 아래 code 에서 에러 발생
 //vitamin.score = 33;
 // 아래 code 에서 vitamin.first = 'vitamin' // readonly 이기 때문에 에러 발생
