@@ -55,3 +55,21 @@ console.log(superMan);
 // 아래 code 에서 vitamin.secretMethode() // private method 이기 때문에 에러 발생
 //vitamin.secretMethode()
 console.log(vitamin);
+class Bike {
+    constructor(color) {
+        this.color = color;
+    }
+}
+const redBike = new Bike('red');
+console.log(redBike.color);
+class Jacket {
+    constructor(color, brand) {
+        this.color = color;
+        this.brand = brand;
+    }
+    print() {
+        console.log(`brand: ${this.brand}, color: ${this.color}`);
+    }
+}
+const redJacket = new Jacket('red', 'nike');
+console.log(redJacket.print());

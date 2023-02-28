@@ -54,3 +54,32 @@ console.log(superMan)
 // 아래 code 에서 vitamin.secretMethode() // private method 이기 때문에 에러 발생
 //vitamin.secretMethode()
 console.log(vitamin);
+
+/*======================interface=============================*/
+interface Colorful {
+	color: string;
+}
+interface Printable {
+	print(): void;
+}
+
+class Bike implements Colorful {
+	constructor(public color: string) {
+
+	}
+}
+
+const redBike = new Bike('red');
+console.log(redBike.color);
+
+class Jacket implements Colorful, Printable {
+	constructor(public color: string, public brand: string) {
+
+	}
+	print() {
+		console.log(`brand: ${this.brand}, color: ${this.color}`);
+	}
+}
+
+const redJacket = new Jacket ('red', 'nike')
+console.log(redJacket.print())
