@@ -210,3 +210,24 @@ console.log("노래:", songs);
 const videos = new PlayList();
 videos.add({ title: '소녀', creator: '혁오', resolution: '1080p' });
 console.log("영상:", videos);
+console.log('======================typescript type narrowing ====================');
+function triple(value) {
+    if (typeof value === 'string') {
+        return value.repeat(3);
+    }
+    return value * 3;
+}
+console.log(triple(3));
+console.log(triple("3"));
+console.log('======================typescript Truthiness guard ====================');
+const printLetter = (word) => {
+    if (word) {
+        for (let char of word) {
+            console.log(char);
+        }
+    }
+    else {
+        console.log('word is undefined');
+    }
+};
+printLetter('hello');

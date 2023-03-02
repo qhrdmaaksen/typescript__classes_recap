@@ -272,3 +272,25 @@ console.log("노래:",songs)
 const videos = new PlayList<Video>()
 videos.add({title: '소녀', creator: '혁오', resolution: '1080p'})
 console.log("영상:",videos)
+
+console.log('======================typescript type narrowing ====================');
+function triple(value: number | string) {
+  if(typeof value === 'string') {
+    return value.repeat(3)
+  }
+  return value * 3
+}
+console.log(triple(3))
+console.log(triple("3"))
+
+console.log('======================typescript Truthiness guard ====================');
+const printLetter = (word?: string) => {
+  if(word) {
+    for(let char of word) {
+      console.log(char)
+    }
+  } else {
+    console.log('word is undefined')
+  }
+}
+printLetter('hello')
