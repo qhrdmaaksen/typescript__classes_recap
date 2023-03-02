@@ -57,7 +57,7 @@ console.log(superMan);
 //vitamin.secretMethode()
 console.log(vitamin);
 
-console.log("======================interface=============================")
+console.log('======================interface=============================');
 
 interface Colorful {
   color: string;
@@ -83,7 +83,9 @@ class Jacket implements Colorful, Printable {
 const redJacket = new Jacket('red', 'nike');
 console.log(redJacket.print());
 
-console.log("======================abstract class=============================")
+console.log(
+  '======================abstract class=============================',
+);
 
 abstract class Employees {
   constructor(public first: string, public last: string) {}
@@ -111,7 +113,7 @@ class PartTimeEmployees extends Employees {
     public first: string,
     public last: string,
     private hourWorked: number,
-		private hourlyRate: number,
+    private hourlyRate: number,
   ) {
     super(first, last);
   }
@@ -122,27 +124,27 @@ class PartTimeEmployees extends Employees {
 
 const player1 = new FullTimeEmployees('vita', 'min', 1000);
 const player2 = new PartTimeEmployees('min', 'woo', 10, 100);
-console.log("player1:",player1);
-console.log("player1 salary: ",player1.getPay());
-console.log("player2:",player2);
-console.log("player2 salary: ",player2.getPay());
+console.log('player1:', player1);
+console.log('player1 salary: ', player1.getPay());
+console.log('player2:', player2);
+console.log('player2 salary: ', player2.getPay());
 
-console.log("======================typescript generic01====================")
+console.log('======================typescript generic01====================');
 
-const nums: Array<number> = []
-const colors: Array<string> = []
+const nums: Array<number> = [];
+const colors: Array<string> = [];
 /*제네릭 함수인 querySelector 에 type HTMLInputElement 를 지정해 value 에 접근하도록했으며
-* null 반환을 하지 않도록 not null 인 느낌표를 붙여줘서 inputEl 에 접근해 값을 변경토록함*/
-const inputEl = document.querySelector<HTMLInputElement>("#username")!
-console.log(inputEl)
-console.dir(inputEl)
-inputEl.value = "hello woomi";
-const buttonEl = document.querySelector<HTMLButtonElement>(".btn")
+ * null 반환을 하지 않도록 not null 인 느낌표를 붙여줘서 inputEl 에 접근해 값을 변경토록함*/
+const inputEl = document.querySelector<HTMLInputElement>('#username')!;
+console.log(inputEl);
+console.dir(inputEl);
+inputEl.value = 'hello woomi';
+const buttonEl = document.querySelector<HTMLButtonElement>('.btn');
 
-console.log("======================typescript generic02====================")
+console.log('======================typescript generic02====================');
 interface Dog {
-  name: string,
-  age: number
+  name: string;
+  age: number;
 }
 function numberIdentity(item: number): number {
   return item;
@@ -156,24 +158,117 @@ function stringIdentity(item: number): number {
 function identity<T>(item: T): T {
   return item;
 }
-console.log(identity<number>(7))
-console.log(identity<string>("7"))
-console.log(identity<boolean>(true))
+console.log(identity<number>(7));
+console.log(identity<string>('7'));
+console.log(identity<boolean>(true));
 // 인터페이스 타입 사용 예시
-console.log(identity<Dog>({name: "woomi", age: 33}))
+console.log(identity<Dog>({ name: 'woomi', age: 33 }));
 
-console.log("======================typescript generic03====================")
+console.log(
+  '======================typescript generic03 추론된 제네릭 타입 파라미터====================',
+);
 /*제네릭 함수로 각 타입 들어올때 list 의 랜덤한 값을 출력토록하는 예시*/
 function getRandomElement<T>(list: T[]): T {
   const randomIndex = Math.floor(Math.random() * list.length);
-  return list[randomIndex]
+  return list[randomIndex];
 }
 
-const randomNumberElement = getRandomElement<number>([1,2,3,4,5,6,7,8,9,10])
-console.log(randomNumberElement)
-const randomStringElement = getRandomElement<string>(['a','b','c','d','e','f','g','h','i','j'])
-console.log(randomStringElement)
+const randomNumberElement = getRandomElement<number>([
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+]);
+console.log(randomNumberElement);
+const randomStringElement = getRandomElement<string>([
+  'a',
+  'b',
+  'c',
+  'd',
+  'e',
+  'f',
+  'g',
+  'h',
+  'i',
+  'j',
+]);
+console.log(randomStringElement);
 
-console.log("======================typescript generic04 추론된 제네릭 타입 파라미터 ====================")
+console.log(
+  '======================typescript generic04 여러 타입을 갖는 제네릭 ====================',
+);
+// 여러 타입을 갖는 제네릭 함수에서는 두 번째 제네릭 타입은 U 로 지정해서 사용함\
+function merge<T, U>(obj: T, obj2: U): T & U {
+  return {
+    ...obj,
+    ...obj2,
+  };
+}
+const comboOBJ = merge({ name: 'woomi' }, { hobby: ['sleep', 'eat'] });
+console.log(comboOBJ);
 
+console.log(
+  '======================typescript generic05 타입 제한 추가 ====================',
+);
+// 타입을 제한하는 방법은 extends 를 사용함 (extends 는 상속과 비슷한 개념)
+// 아래 코드에선 숫자 문자 등 타입을 제한하지 않고 object 타입이여야 한다고 제한함
+function objControl<T extends object, U extends object>(
+  obj: T,
+  obj2: U,
+): T & U {
+  return {
+    ...obj,
+    ...obj2,
+  };
+}
+const objMerge = objControl({ name: 'minwoo' }, { age: 33 });
+console.log(objMerge);
 
+console.log(
+  '======================typescript generic05 타입 제한 추가 interface ====================',
+);
+interface LengthType {
+  length: number;
+}
+
+/* 
+function printDoubleLength <T extends LengthType> (thing: T) : number {
+  return thing.length * 2;
+}*/
+// 타입 직접 지정
+function printDoubleLength(thing: LengthType) {
+  return thing.length * 2;
+}
+console.log('thing 에는 몇 글자로 이뤄져있나요 : ', printDoubleLength('hello'));
+
+console.log(
+  '======================typescript generic05 기본 타입 파라미터 ====================',
+);
+// 기본 타입 파라미터로 number 를 지정했으므로 number 타입만 받을 수 있음
+function makeEmptyArray<T = number>(): T[] {
+  return []
+}
+const makeNums = makeEmptyArray()
+// 기본 값 타입외에 다른 타입은 따로 아래 코드처럼 지정해주면됨
+const makeBools = makeEmptyArray<boolean>()
+
+console.log('======================typescript generic05 create class ====================');
+// 클래스에 포함되는 메서드를 작성할때 타입을 갖도록 구성하는 방법
+interface Song {
+  title: string;
+  creator: string;
+}
+interface Video {
+  title: string;
+  creator: string;
+  resolution: string;
+}
+class PlayList<T>{
+  public queue: T[] = [];
+  add(el: T) {
+    this.queue.push(el)
+  }
+}
+const songs = new PlayList<Song>()
+songs.add({title: '소녀', creator: '혁오'})
+console.log("노래:",songs)
+const videos = new PlayList<Video>()
+videos.add({title: '소녀', creator: '혁오', resolution: '1080p'})
+console.log("영상:",videos)

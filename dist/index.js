@@ -55,7 +55,7 @@ console.log(superMan);
 // 아래 code 에서 vitamin.secretMethode() // private method 이기 때문에 에러 발생
 //vitamin.secretMethode()
 console.log(vitamin);
-console.log("======================interface=============================");
+console.log('======================interface=============================');
 class Bike {
     constructor(color) {
         this.color = color;
@@ -74,7 +74,7 @@ class Jacket {
 }
 const redJacket = new Jacket('red', 'nike');
 console.log(redJacket.print());
-console.log("======================abstract class=============================");
+console.log('======================abstract class=============================');
 class Employees {
     constructor(first, last) {
         this.first = first;
@@ -109,21 +109,21 @@ class PartTimeEmployees extends Employees {
 }
 const player1 = new FullTimeEmployees('vita', 'min', 1000);
 const player2 = new PartTimeEmployees('min', 'woo', 10, 100);
-console.log("player1:", player1);
-console.log("player1 salary: ", player1.getPay());
-console.log("player2:", player2);
-console.log("player2 salary: ", player2.getPay());
-console.log("======================typescript generic01====================");
+console.log('player1:', player1);
+console.log('player1 salary: ', player1.getPay());
+console.log('player2:', player2);
+console.log('player2 salary: ', player2.getPay());
+console.log('======================typescript generic01====================');
 const nums = [];
 const colors = [];
 /*제네릭 함수인 querySelector 에 type HTMLInputElement 를 지정해 value 에 접근하도록했으며
-* null 반환을 하지 않도록 not null 인 느낌표를 붙여줘서 inputEl 에 접근해 값을 변경토록함*/
-const inputEl = document.querySelector("#username");
+ * null 반환을 하지 않도록 not null 인 느낌표를 붙여줘서 inputEl 에 접근해 값을 변경토록함*/
+const inputEl = document.querySelector('#username');
 console.log(inputEl);
 console.dir(inputEl);
-inputEl.value = "hello woomi";
-const buttonEl = document.querySelector(".btn");
-console.log("======================typescript generic02====================");
+inputEl.value = 'hello woomi';
+const buttonEl = document.querySelector('.btn');
+console.log('======================typescript generic02====================');
 function numberIdentity(item) {
     return item;
 }
@@ -135,18 +135,78 @@ function identity(item) {
     return item;
 }
 console.log(identity(7));
-console.log(identity("7"));
+console.log(identity('7'));
 console.log(identity(true));
 // 인터페이스 타입 사용 예시
-console.log(identity({ name: "woomi", age: 33 }));
-console.log("======================typescript generic03====================");
+console.log(identity({ name: 'woomi', age: 33 }));
+console.log('======================typescript generic03 추론된 제네릭 타입 파라미터====================');
 /*제네릭 함수로 각 타입 들어올때 list 의 랜덤한 값을 출력토록하는 예시*/
 function getRandomElement(list) {
     const randomIndex = Math.floor(Math.random() * list.length);
     return list[randomIndex];
 }
-const randomNumberElement = getRandomElement([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+const randomNumberElement = getRandomElement([
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+]);
 console.log(randomNumberElement);
-const randomStringElement = getRandomElement(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']);
+const randomStringElement = getRandomElement([
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+]);
 console.log(randomStringElement);
-console.log("======================typescript generic04 추론된 제네릭 타입 파라미터 ====================");
+console.log('======================typescript generic04 여러 타입을 갖는 제네릭 ====================');
+// 여러 타입을 갖는 제네릭 함수에서는 두 번째 제네릭 타입은 U 로 지정해서 사용함\
+function merge(obj, obj2) {
+    return Object.assign(Object.assign({}, obj), obj2);
+}
+const comboOBJ = merge({ name: 'woomi' }, { hobby: ['sleep', 'eat'] });
+console.log(comboOBJ);
+console.log('======================typescript generic05 타입 제한 추가 ====================');
+// 타입을 제한하는 방법은 extends 를 사용함 (extends 는 상속과 비슷한 개념)
+// 아래 코드에선 숫자 문자 등 타입을 제한하지 않고 object 타입이여야 한다고 제한함
+function objControl(obj, obj2) {
+    return Object.assign(Object.assign({}, obj), obj2);
+}
+const objMerge = objControl({ name: 'minwoo' }, { age: 33 });
+console.log(objMerge);
+console.log('======================typescript generic05 타입 제한 추가 interface ====================');
+/*
+function printDoubleLength <T extends LengthType> (thing: T) : number {
+  return thing.length * 2;
+}*/
+// 타입 직접 지정
+function printDoubleLength(thing) {
+    return thing.length * 2;
+}
+console.log('thing 에는 몇 글자로 이뤄져있나요 : ', printDoubleLength('hello'));
+console.log('======================typescript generic05 기본 타입 파라미터 ====================');
+// 기본 타입 파라미터로 number 를 지정했으므로 number 타입만 받을 수 있음
+function makeEmptyArray() {
+    return [];
+}
+const makeNums = makeEmptyArray();
+// 기본 값 타입외에 다른 타입은 따로 아래 코드처럼 지정해주면됨
+const makeBools = makeEmptyArray();
+console.log('======================typescript generic05 create class ====================');
+class PlayList {
+    constructor() {
+        this.queue = [];
+    }
+    add(el) {
+        this.queue.push(el);
+    }
+}
+const songs = new PlayList();
+songs.add({ title: '소녀', creator: '혁오' });
+console.log("노래:", songs);
+const videos = new PlayList();
+videos.add({ title: '소녀', creator: '혁오', resolution: '1080p' });
+console.log("영상:", videos);
