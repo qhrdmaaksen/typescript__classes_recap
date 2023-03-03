@@ -243,13 +243,15 @@ console.log(
 );
 // 기본 타입 파라미터로 number 를 지정했으므로 number 타입만 받을 수 있음
 function makeEmptyArray<T = number>(): T[] {
-  return []
+  return [];
 }
-const makeNums = makeEmptyArray()
+const makeNums = makeEmptyArray();
 // 기본 값 타입외에 다른 타입은 따로 아래 코드처럼 지정해주면됨
-const makeBools = makeEmptyArray<boolean>()
+const makeBools = makeEmptyArray<boolean>();
 
-console.log('======================typescript generic05 create class ====================');
+console.log(
+  '======================typescript generic05 create class ====================',
+);
 // 클래스에 포함되는 메서드를 작성할때 타입을 갖도록 구성하는 방법
 interface Song {
   title: string;
@@ -260,37 +262,142 @@ interface Video {
   creator: string;
   resolution: string;
 }
-class PlayList<T>{
+class PlayList<T> {
   public queue: T[] = [];
   add(el: T) {
-    this.queue.push(el)
+    this.queue.push(el);
   }
 }
-const songs = new PlayList<Song>()
-songs.add({title: '소녀', creator: '혁오'})
-console.log("노래:",songs)
-const videos = new PlayList<Video>()
-videos.add({title: '소녀', creator: '혁오', resolution: '1080p'})
-console.log("영상:",videos)
+const songs = new PlayList<Song>();
+songs.add({ title: '소녀', creator: '혁오' });
+console.log('노래:', songs);
+const videos = new PlayList<Video>();
+videos.add({ title: '소녀', creator: '혁오', resolution: '1080p' });
+console.log('영상:', videos);
 
-console.log('======================typescript type narrowing ====================');
+console.log(
+  '======================typescript type narrowing (typeof)====================',
+);
 function triple(value: number | string) {
-  if(typeof value === 'string') {
-    return value.repeat(3)
+  if (typeof value === 'string') {
+    return value.repeat(3);
   }
-  return value * 3
+  return value * 3;
 }
-console.log(triple(3))
-console.log(triple("3"))
+console.log(triple(3));
+console.log(triple('3'));
 
-console.log('======================typescript Truthiness guard ====================');
+console.log(
+  '======================typescript Truthiness narrowing ====================',
+);
 const printLetter = (word?: string) => {
-  if(word) {
-    for(let char of word) {
-      console.log(char)
+  if (word) {
+    for (let char of word) {
+      console.log(char);
     }
   } else {
-    console.log('word is undefined')
+    console.log('word is undefined');
+  }
+};
+printLetter('hello');
+console.log(
+  '======================typescript equality narrowing ====================',
+);
+// 비교 연산자 사용시 타입을 좁힐 수 있음
+function someDemo(x: number | string, y: boolean | string) {
+  if (x === y) {
+    x.toUpperCase();
   }
 }
-printLetter('hello')
+console.log(
+  '======================typescript in narrowing ====================',
+);
+interface Movie {
+  title: string;
+  duration: number;
+}
+interface TVShow {
+  title: string;
+  numEpisodes: number;
+  episodeDuration: number;
+}
+// in 타입 좁히기로 media 인자에 numEpisodes 가 있으면 TVShow 타입이고 없으면 Movie 타입 이라는 것을 알 수 있음
+function getRuntime(media: Movie | TVShow) {
+  if ('numEpisodes' in media) {
+    return media.numEpisodes * media.episodeDuration;
+  }
+  return media.duration;
+}
+console.log(getRuntime({ title: 'Amadeus', duration: 140 }));
+console.log(
+  getRuntime({ title: 'The Office', numEpisodes: 200, episodeDuration: 20 }),
+);
+
+console.log(
+  '======================typescript instanceof narrowing ====================',
+);
+class User {
+  constructor(public username: string) {}
+}
+class Company {
+  constructor(public name: string) {}
+}
+function printName(entity: User | Company) {
+  // entity 타입이 User 인스턴스인지 Company 인스턴스인지 알 수 있음
+  if (entity instanceof User) {
+    console.log(entity.username);
+  } else {
+    console.log(entity.name);
+  }
+}
+printName(new User('woomi'));
+printName(new Company('vitamin'));
+
+console.log(
+  '======================typescript predicate (단언,명제)====================',
+);
+interface MyCat {
+  name: string;
+  numLives: number;
+}
+interface MyDog {
+  name: string;
+  breed: string;
+}
+// MyCat 의 numLives 가 있으면 MyCat 타입이고 없으면 MyDog 타입 이라는 것을 알 수 있음
+function isCat(animal: MyCat | MyDog): animal is MyCat {
+  return (animal as MyCat).numLives !== undefined;
+}
+function makeNoise(animal: MyCat | MyDog) {
+  if (isCat(animal)) {
+    return 'meow';
+  } else {
+    return 'woof';
+  }
+}
+console.log(makeNoise({ name: 'woomi', numLives: 9 }));
+console.log(makeNoise({ name: 'minwoo', breed: 'human' }));
+
+console.log(
+  '================typescript discriminated unions (판별유니온)===============',
+);
+interface Rooster {
+  name: string;
+  weight: number;
+  age: number;
+}
+interface Cow {
+  name: string;
+  weight: number;
+  age: number;
+}
+interface Pig {
+  name: string;
+  weight: number;
+  age: number;
+}
+
+type FarmAnimal = Rooster | Cow | Pig;
+function getAnimalSound(animals: FarmAnimal) {
+  
+}

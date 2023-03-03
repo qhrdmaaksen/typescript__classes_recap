@@ -206,11 +206,11 @@ class PlayList {
 }
 const songs = new PlayList();
 songs.add({ title: '소녀', creator: '혁오' });
-console.log("노래:", songs);
+console.log('노래:', songs);
 const videos = new PlayList();
 videos.add({ title: '소녀', creator: '혁오', resolution: '1080p' });
-console.log("영상:", videos);
-console.log('======================typescript type narrowing ====================');
+console.log('영상:', videos);
+console.log('======================typescript type narrowing (typeof)====================');
 function triple(value) {
     if (typeof value === 'string') {
         return value.repeat(3);
@@ -218,8 +218,8 @@ function triple(value) {
     return value * 3;
 }
 console.log(triple(3));
-console.log(triple("3"));
-console.log('======================typescript Truthiness guard ====================');
+console.log(triple('3'));
+console.log('======================typescript Truthiness narrowing ====================');
 const printLetter = (word) => {
     if (word) {
         for (let char of word) {
@@ -231,3 +231,60 @@ const printLetter = (word) => {
     }
 };
 printLetter('hello');
+console.log('======================typescript equality narrowing ====================');
+// 비교 연산자 사용시 타입을 좁힐 수 있음
+function someDemo(x, y) {
+    if (x === y) {
+        x.toUpperCase();
+    }
+}
+console.log('======================typescript in narrowing ====================');
+// in 타입 좁히기로 media 인자에 numEpisodes 가 있으면 TVShow 타입이고 없으면 Movie 타입 이라는 것을 알 수 있음
+function getRuntime(media) {
+    if ('numEpisodes' in media) {
+        return media.numEpisodes * media.episodeDuration;
+    }
+    return media.duration;
+}
+console.log(getRuntime({ title: 'Amadeus', duration: 140 }));
+console.log(getRuntime({ title: 'The Office', numEpisodes: 200, episodeDuration: 20 }));
+console.log('======================typescript instanceof narrowing ====================');
+class User {
+    constructor(username) {
+        this.username = username;
+    }
+}
+class Company {
+    constructor(name) {
+        this.name = name;
+    }
+}
+function printName(entity) {
+    // entity 타입이 User 인스턴스인지 Company 인스턴스인지 알 수 있음
+    if (entity instanceof User) {
+        console.log(entity.username);
+    }
+    else {
+        console.log(entity.name);
+    }
+}
+printName(new User('woomi'));
+printName(new Company('vitamin'));
+console.log('======================typescript predicate (단언,명제)====================');
+// MyCat 의 numLives 가 있으면 MyCat 타입이고 없으면 MyDog 타입 이라는 것을 알 수 있음
+function isCat(animal) {
+    return animal.numLives !== undefined;
+}
+function makeNoise(animal) {
+    if (isCat(animal)) {
+        return 'meow';
+    }
+    else {
+        return 'woof';
+    }
+}
+console.log(makeNoise({ name: 'woomi', numLives: 9 }));
+console.log(makeNoise({ name: 'minwoo', breed: 'human' }));
+console.log('================typescript discriminated unions (판별유니온)===============');
+function getAnimalSound(animals) {
+}
