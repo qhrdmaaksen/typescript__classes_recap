@@ -286,5 +286,27 @@ function makeNoise(animal) {
 console.log(makeNoise({ name: 'woomi', numLives: 9 }));
 console.log(makeNoise({ name: 'minwoo', breed: 'human' }));
 console.log('================typescript discriminated unions (판별유니온)===============');
+// never 타입 : 절대 발생할 수 없는 타입
+// never 타입은 모든 타입에 할당할 수 있기 때문에 모든 타입을 할당할 수 있음
 function getAnimalSound(animals) {
+    switch (animals.kind) {
+        case 'rooster':
+            return '꼬꼬댁';
+        case 'cow':
+            return '음메';
+        case 'pig':
+            return '꿀꿀';
+        case 'sheep':
+            return '메메';
+        default:
+            const _exhaustiveCheck = animals;
+            return _exhaustiveCheck;
+    }
 }
+const woomi = {
+    name: 'woomi',
+    weight: 3,
+    age: 15,
+    kind: 'pig',
+};
+console.log(getAnimalSound(woomi));

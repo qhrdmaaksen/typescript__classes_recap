@@ -381,23 +381,55 @@ console.log(makeNoise({ name: 'minwoo', breed: 'human' }));
 console.log(
   '================typescript discriminated unions (판별유니온)===============',
 );
+// interface 에 kind 라는 공통 속성을 추가하고 각각의 타입에 kind 를 지정해줌
+// 이렇게 하면 kind 를 통해 타입을 판별할 수 있음
 interface Rooster {
   name: string;
   weight: number;
   age: number;
+  kind: 'rooster';
 }
 interface Cow {
   name: string;
   weight: number;
   age: number;
+  kind: 'cow';
 }
 interface Pig {
   name: string;
   weight: number;
   age: number;
+  kind: 'pig';
+}
+interface Sheep {
+  name: string;
+  weight: number;
+  age: number;
+  kind: 'sheep';
 }
 
-type FarmAnimal = Rooster | Cow | Pig;
+type FarmAnimal = Rooster | Cow | Pig | Sheep;
+// never 타입 : 절대 발생할 수 없는 타입
+// never 타입은 모든 타입에 할당할 수 있기 때문에 모든 타입을 할당할 수 있음
 function getAnimalSound(animals: FarmAnimal) {
-  
+  switch(animals.kind) {
+    case 'rooster':
+      return '꼬꼬댁';
+    case 'cow':
+      return '음메';
+    case 'pig':
+      return '꿀꿀';
+    case 'sheep':
+      return '메메';
+    default:
+      const _exhaustiveCheck: never = animals;
+      return _exhaustiveCheck;
+  }
 }
+const woomi: Pig = {
+  name: 'woomi',
+  weight: 3,
+  age: 15,
+  kind: 'pig',
+}
+console.log(getAnimalSound(woomi))
